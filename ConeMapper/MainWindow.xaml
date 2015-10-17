@@ -1,0 +1,102 @@
+﻿<RibbonWindow x:Class="ConeMapper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xc="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:ConeMapper"
+        mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="{Binding TitleText,FallbackValue=MiniMagellan ConeMapper}" Height="593" Width="929" Closing="RibbonWindow_Closing">
+    <DockPanel LastChildFill="True">
+        <Ribbon DockPanel.Dock="Top" >
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Header="_New" ImageSource="images/Document-02.png" Click="New_Click"  />
+                    <RibbonApplicationMenuItem Header="_Open ..." ImageSource="images/Open.png" Click="Open_Click" />
+                    <RibbonApplicationMenuItem Header="_Save" ImageSource="images/Save.png" Click="Save_Click" />
+                    <RibbonApplicationMenuItem Header="Save _as ..." ImageSource="images/Save As.png" Click="SaveAs_Click" />
+                    <RibbonApplicationMenuItem Header="E_xit" ImageSource="images/Close.png" Click="Exit_Click" />
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <RibbonTab Header="Main">
+                <RibbonGroup  >
+                    <RibbonButton LargeImageSource="images/Maps -04.png" Label="Image ..." Click="Image_Click" />
+                </RibbonGroup>
+            </RibbonTab>
+
+        </Ribbon>
+
+        <StatusBar DockPanel.Dock="Bottom" >
+            <StatusBarItem >
+                <TextBlock Text="{Binding DataModel.ImageFileName, FallbackValue=filename}" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem ></StatusBarItem>
+            <StatusBarItem ></StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right" >
+                <TextBlock Text="{Binding StatusText,FallbackValue=status text}" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Right" >
+            <ListView >
+                <ListViewItem >
+                    <Button Content="Dummy Item" />
+                </ListViewItem>
+            </ListView>
+            <xc:PropertyGrid x:Name="propertyGrid1" SelectedObject="{Binding DataModel}" VerticalAlignment="Bottom"/>
+            <xc:PropertyGrid x:Name="propertyGrid2" SelectedObject="{Binding ViewModel}" VerticalAlignment="Bottom"/>
+        </StackPanel>
+
+        <Canvas x:Name="canvas1" MouseLeftButtonDown="canvas1_MouseLeftButtonDown" MouseLeftButtonUp="canvas1_MouseLeftButtonUp" MouseRightButtonDown="canvas1_MouseRightButtonDown" MouseRightButtonUp="canvas1_MouseRightButtonUp" MouseWheel="canvas1_MouseWheel" MouseMove="canvas1_MouseMove" SizeChanged="canvas1_SizeChanged" >
+            <Canvas.Resources>
+                <ResourceDictionary Source="/Draw/ResourceDictionary.xaml" />
+            </Canvas.Resources>
+            <Canvas.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Align1" Click="Align1_Click" />
+                    <MenuItem Header="Align2" Click="Align2_Click" />
+                    <MenuItem Header="Origin" Click="Origin_Click" />
+                    <Separator />
+                    <MenuItem Header="AddCone" Click="Cone_Click"  />
+                    <Separator />
+                    <MenuItem Header="Test" Click="Test_Click" />
+                </ContextMenu>
+            </Canvas.ContextMenu>
+
+            <ContentControl Content="{StaticResource OriginShape}" Canvas.Left="{Binding ViewModel.OriginScreenPointX}" Canvas.Top="{Binding ViewModel.OriginScreenPointY}" />
+
+            <Ellipse x:Name="Align1Shape" Fill="{x:Null}" Stroke="LightGray" Height="20" Width="20" RenderTransform="{StaticResource Transform20}"
+                                     Canvas.Left="{Binding NavigationPlan.Align1ImagePoint.X}" Canvas.Top="{Binding NavigationPlan.Align1ImagePoint.Y}" />
+            <Ellipse x:Name="Align2Shape" Fill="{x:Null}" Stroke="LightGray" Height="20" Width="20"  RenderTransform="{StaticResource Transform20}"
+                                     Canvas.Left="{Binding NavigationPlan.Align2ImagePoint.X}" Canvas.Top="{Binding NavigationPlan.Align2ImagePoint.Y}" />
+
+            <ItemsControl ItemsSource="{Binding ViewModel.Cones}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding X}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+
+            <ItemsControl ItemsSource="{Binding ViewModel.Connections}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+
+
+        </Canvas>
+    </DockPanel>
+</RibbonWindow>
