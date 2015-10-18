@@ -29,18 +29,32 @@ namespace ConeMapper
 
         public double OriginScreenPointX
         {
-            get
-            {
-                return DataModel?.OriginXp * Canvas?.ActualWidth ?? double.NaN;
-            }
+            get { return DataModel?.OriginXp * Canvas?.ActualWidth ?? double.NaN; }
         }
 
         public double OriginScreenPointY
         {
-            get
-            {
-                return DataModel?.OriginYp * Canvas?.ActualHeight ?? double.NaN;
-            }
+            get { return DataModel?.OriginYp * Canvas?.ActualHeight ?? double.NaN; }
+        }
+
+        public double Align1ScreenPointX
+        {
+            get { return DataModel?.Align1Xp * Canvas?.ActualWidth ?? double.NaN; }
+        }
+
+        public double Align1ScreenPointY
+        {
+            get { return DataModel?.Align1Yp * Canvas?.ActualHeight ?? double.NaN; }
+        }
+
+        public double Align2ScreenPointX
+        {
+            get { return DataModel?.Align2Xp * Canvas?.ActualWidth ?? double.NaN; }
+        }
+
+        public double Align2ScreenPointY
+        {
+            get { return DataModel?.Align2Yp * Canvas?.ActualHeight ?? double.NaN; }
         }
 
         DataModel DataModel;

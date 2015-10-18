@@ -12,10 +12,6 @@ using System.Windows.Controls.Primitives;
 
 namespace ConeMapper
 {
-    /// <summary>
-    /// A UI element that represents a connector, which is a connection anchor point.
-    /// The 'Hotspot' property allows the center point of the connector to be bound to the data model.
-    /// </summary>
     public class ConnectorItem : ContentControl
     {
         public static readonly DependencyProperty HotspotProperty =

@@ -113,12 +113,18 @@ namespace ConeMapper
 
         private void Align1_Click(object sender, RoutedEventArgs e)
         {
-
+            DataModel.Align1Xp = lastRightMouseDownAt.X / canvas1.ActualWidth;
+            DataModel.Align1Yp = lastRightMouseDownAt.Y / canvas1.ActualHeight;
+            ViewModel.OnPropertyChanged("Align1ScreenPointX");
+            ViewModel.OnPropertyChanged("Align1ScreenPointY");
         }
 
         private void Align2_Click(object sender, RoutedEventArgs e)
         {
-
+            DataModel.Align2Xp = lastRightMouseDownAt.X / canvas1.ActualWidth;
+            DataModel.Align2Yp = lastRightMouseDownAt.Y / canvas1.ActualHeight;
+            ViewModel.OnPropertyChanged("Align2ScreenPointX");
+            ViewModel.OnPropertyChanged("Align2ScreenPointY");
         }
 
         private void Origin_Click(object sender, RoutedEventArgs e)

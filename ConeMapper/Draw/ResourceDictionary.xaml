@@ -34,6 +34,28 @@
             <TextBlock Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextColor}}" FontSize="12.00" Text="(0,0)" />-->
         </Canvas>
     </Grid>
+    
+        <Grid x:Key="Align1Shape" >
+        <Canvas  >
+            <Canvas.RenderTransform>
+                <TranslateTransform X="-10" Y="-10" />
+            </Canvas.RenderTransform>
+            <Ellipse Grid.Column="1" Grid.Row="1" Fill="Yellow" Stroke="LightBlue" StrokeThickness="2.0"  Width="20" Height="20" />
+            <!--<TextBlock Grid.Column="1" Grid.Row="1" Foreground="Black" Text="+" FontSize="20.0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextColor}}" FontSize="12.00" Text="(0,0)" />-->
+        </Canvas>
+    </Grid>
+
+        <Grid x:Key="Align2Shape" >
+        <Canvas  >
+            <Canvas.RenderTransform>
+                <TranslateTransform X="-10" Y="-10" />
+            </Canvas.RenderTransform>
+            <Ellipse Grid.Column="1" Grid.Row="1" Fill="Yellow" Stroke="LightBlue" StrokeThickness="2.0"  Width="20" Height="20" />
+            <!--<TextBlock Grid.Column="1" Grid.Row="1" Foreground="Black" Text="+" FontSize="20.0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ControlTextColor}}" FontSize="12.00" Text="(0,0)" />-->
+        </Canvas>
+    </Grid>
 
     <TranslateTransform x:Key="Transform20" X="-20" Y="5" />
 
@@ -97,9 +119,4 @@
         <Line Stroke="Gray" StrokeThickness="2" X1="{Binding MapWayPoint1.ConnectorHotspot.X}" Y1="{Binding MapWayPoint1.ConnectorHotspot.Y}" X2="{Binding MapWayPoint2.ConnectorHotspot.X}" Y2="{Binding MapWayPoint2.ConnectorHotspot.Y}" />
     </DataTemplate>
 
-    <!--<DataTemplate DataType="{x:Type local:ConePointViewModel}">
-        <Grid>
-            <Ellipse Fill="{Binding Color, Converter={StaticResource colorToBrushConverter}}" Width="20" Height="20" Stroke="White" StrokeThickness="2.0" />
-        </Grid>
-    </DataTemplate>-->
 </ResourceDictionary>

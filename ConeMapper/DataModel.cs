@@ -33,10 +33,30 @@ namespace ConeMapper
         public double MapHeight { get { return _MapHeight; } set { _MapHeight = value; OnPropertyChanged(); } }
         double _MapHeight = 0;
 
-        public double OriginXp { get { return _OriginXp; } set { _OriginXp = value; OnPropertyChanged(); OnPropertyChanged("OriginScreenPointX"); } }
-        double _OriginXp = 0.0;
-        public double OriginYp { get { return _OriginYp; } set { _OriginYp = value; OnPropertyChanged(); OnPropertyChanged("OriginScreenPointY"); } }
+        public double OriginXp { get { return _OriginXp; } set { _OriginXp = value; OnPropertyChanged(); } }
+        double _OriginXp = 0;
+        public double OriginYp { get { return _OriginYp; } set { _OriginYp = value; OnPropertyChanged(); } }
         double _OriginYp = 0;
+
+        public double Align1Xp { get { return _Align1Xp; } set { _Align1Xp = value; OnPropertyChanged(); } }
+        double _Align1Xp = 0;
+        public double Align1Yp { get { return _Align1Yp; } set { _Align1Yp = value; OnPropertyChanged(); } }
+        double _Align1Yp = 0;
+
+        public double Align2Xp { get { return _Align2Xp; } set { _Align2Xp = value; OnPropertyChanged(); } }
+        double _Align2Xp = 0;
+        public double Align2Yp { get { return _Align2Yp; } set { _Align2Yp = value; OnPropertyChanged(); } }
+        double _Align2Yp = 0;
+
+        public int Align1X { get { return _Align1X; } set { _Align1X = value; OnPropertyChanged(); } }
+        int _Align1X = 0;
+        public int Align1Y { get { return _MyProperty; } set { _MyProperty = value; OnPropertyChanged(); } }
+        int _MyProperty = 0;
+
+        public int Align2X { get { return _Align2X; } set { _Align2X = value; OnPropertyChanged(); } }
+        int _Align2X = 0;
+        public int Align2Y { get { return _Align2Y; } set { _Align2Y = value; OnPropertyChanged(); } }
+        int _Align2Y = 0; 
 
         public string ImageFileName { get { return _ImageFileName; } set { _ImageFileName = value; OnPropertyChanged(); } }
         string _ImageFileName;

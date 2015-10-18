@@ -39,64 +39,94 @@
             </StatusBarItem>
         </StatusBar>
 
-        <StackPanel Orientation="Vertical" DockPanel.Dock="Right" >
-            <ListView >
-                <ListViewItem >
-                    <Button Content="Dummy Item" />
-                </ListViewItem>
-            </ListView>
-            <xc:PropertyGrid x:Name="propertyGrid1" SelectedObject="{Binding DataModel}" VerticalAlignment="Bottom"/>
-            <xc:PropertyGrid x:Name="propertyGrid2" SelectedObject="{Binding ViewModel}" VerticalAlignment="Bottom"/>
-        </StackPanel>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="canvas1" MouseLeftButtonDown="canvas1_MouseLeftButtonDown" MouseLeftButtonUp="canvas1_MouseLeftButtonUp" MouseRightButtonDown="canvas1_MouseRightButtonDown" MouseRightButtonUp="canvas1_MouseRightButtonUp" MouseWheel="canvas1_MouseWheel" MouseMove="canvas1_MouseMove" SizeChanged="canvas1_SizeChanged" >
-            <Canvas.Resources>
-                <ResourceDictionary Source="/Draw/ResourceDictionary.xaml" />
-            </Canvas.Resources>
-            <Canvas.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Header="Align1" Click="Align1_Click" />
-                    <MenuItem Header="Align2" Click="Align2_Click" />
-                    <MenuItem Header="Origin" Click="Origin_Click" />
-                    <Separator />
-                    <MenuItem Header="AddCone" Click="Cone_Click"  />
-                    <Separator />
-                    <MenuItem Header="Test" Click="Test_Click" />
-                </ContextMenu>
-            </Canvas.ContextMenu>
+            <Canvas x:Name="canvas1" MouseLeftButtonDown="canvas1_MouseLeftButtonDown" MouseLeftButtonUp="canvas1_MouseLeftButtonUp" MouseRightButtonDown="canvas1_MouseRightButtonDown" MouseRightButtonUp="canvas1_MouseRightButtonUp" MouseWheel="canvas1_MouseWheel" MouseMove="canvas1_MouseMove" SizeChanged="canvas1_SizeChanged" 
+                    Grid.Column="0">
+                <Canvas.Resources>
+                    <ResourceDictionary Source="/Draw/ResourceDictionary.xaml" />
+                </Canvas.Resources>
+                <Canvas.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Align1" Click="Align1_Click" />
+                        <MenuItem Header="Align2" Click="Align2_Click" />
+                        <MenuItem Header="Origin" Click="Origin_Click" />
+                        <Separator />
+                        <MenuItem Header="AddCone" Click="Cone_Click"  />
+                        <Separator />
+                        <MenuItem Header="Test" Click="Test_Click" />
+                    </ContextMenu>
+                </Canvas.ContextMenu>
 
-            <ContentControl Content="{StaticResource OriginShape}" Canvas.Left="{Binding ViewModel.OriginScreenPointX}" Canvas.Top="{Binding ViewModel.OriginScreenPointY}" />
+                <ContentControl Content="{StaticResource OriginShape}" Canvas.Left="{Binding ViewModel.OriginScreenPointX}" Canvas.Top="{Binding ViewModel.OriginScreenPointY}" />
+                <ContentControl Content="{StaticResource Align1Shape}" Canvas.Left="{Binding ViewModel.Align1ScreenPointX}" Canvas.Top="{Binding ViewModel.Align1ScreenPointY}" />               
+                <ContentControl Content="{StaticResource Align2Shape}" Canvas.Left="{Binding ViewModel.Align2ScreenPointX}" Canvas.Top="{Binding ViewModel.Align2ScreenPointY}" />
 
-            <Ellipse x:Name="Align1Shape" Fill="{x:Null}" Stroke="LightGray" Height="20" Width="20" RenderTransform="{StaticResource Transform20}"
+                <!--<Ellipse x:Name="Align1Shape" Fill="{x:Null}" Stroke="LightGray" Height="20" Width="20" RenderTransform="{StaticResource Transform20}"
                                      Canvas.Left="{Binding NavigationPlan.Align1ImagePoint.X}" Canvas.Top="{Binding NavigationPlan.Align1ImagePoint.Y}" />
-            <Ellipse x:Name="Align2Shape" Fill="{x:Null}" Stroke="LightGray" Height="20" Width="20"  RenderTransform="{StaticResource Transform20}"
-                                     Canvas.Left="{Binding NavigationPlan.Align2ImagePoint.X}" Canvas.Top="{Binding NavigationPlan.Align2ImagePoint.Y}" />
+                <Ellipse x:Name="Align2Shape" Fill="{x:Null}" Stroke="LightGray" Height="20" Width="20"  RenderTransform="{StaticResource Transform20}"
+                                     Canvas.Left="{Binding NavigationPlan.Align2ImagePoint.X}" Canvas.Top="{Binding NavigationPlan.Align2ImagePoint.Y}" />-->
 
-            <ItemsControl ItemsSource="{Binding ViewModel.Cones}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
+                <ItemsControl ItemsSource="{Binding ViewModel.Cones}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
 
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Canvas.Left" Value="{Binding X}" />
-                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Canvas.Left" Value="{Binding X}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
 
-            <ItemsControl ItemsSource="{Binding ViewModel.Connections}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+                <ItemsControl ItemsSource="{Binding ViewModel.Connections}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Canvas>
 
+            <StackPanel Orientation="Vertical" Grid.Column="1">
+                <ListView >
+                    <ListViewItem >
+                        <Button Content="Dummy Item" />
+                    </ListViewItem>
+                </ListView>
+                <StackPanel Orientation="Horizontal" >
+                    <StackPanel.Resources>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Width" Value="36" />
+                            <Setter Property="Margin" Value="2,4" />
+                            <Setter Property= "HorizontalContentAlignment" Value="Right" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Label Content="Align1X" />
+                    <TextBox Text="{Binding DataModel.Align1X,Mode=TwoWay}" />
+                    <Label Content="Align1Y" />
+                    <TextBox Text="{Binding DataModel.Align1Y,Mode=TwoWay}" />
+                    <Label Content="Align2X" />
+                    <TextBox Text="{Binding DataModel.Align2X,Mode=TwoWay}" />
+                    <Label Content="Align2Y" />
+                    <TextBox Text="{Binding DataModel.Align2Y,Mode=TwoWay}" />
+                    
+                </StackPanel>
+                <xc:PropertyGrid x:Name="propertyGrid1" SelectedObject="{Binding DataModel}" VerticalAlignment="Bottom"/>
+                <xc:PropertyGrid x:Name="propertyGrid2" SelectedObject="{Binding ViewModel}" VerticalAlignment="Bottom"/>
+            </StackPanel>
 
+            <GridSplitter Width="6" VerticalAlignment="Stretch" Margin="0" HorizontalAlignment="Left" 
+                          ResizeDirection="Columns" ShowsPreview="True" Grid.Column="1"/>
+            <!--<GridSplitter Width="5" Background="Green" VerticalAlignment="Stretch" ResizeDirection="Columns" ShowsPreview="True" Grid.Column="0" />-->
 
-        </Canvas>
+        </Grid>
     </DockPanel>
 </RibbonWindow>
