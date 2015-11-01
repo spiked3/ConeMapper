@@ -9,23 +9,20 @@ using System.Windows;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
+using System.Diagnostics;
 
 namespace ConeMapper
 {
     public class ViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<ConeViewModel> Cones { get { return _cones; } }
-
-        private ObservableCollection<ConeViewModel> _cones = new ObservableCollection<ConeViewModel>();
+        ObservableCollection<ConeViewModel> _cones = new ObservableCollection<ConeViewModel>();
 
         public ObservableCollection<ConnectionViewModel> Connections { get { return _connections; } }
-
-        private ObservableCollection<ConnectionViewModel> _connections = new ObservableCollection<ConnectionViewModel>();
+        ObservableCollection<ConnectionViewModel> _connections = new ObservableCollection<ConnectionViewModel>();
 
         public ImageBrush ImageBrush { get { return _ImageBrush; } set { _ImageBrush = value; OnPropertyChanged(); } }
         ImageBrush _ImageBrush = null;
-
-        Canvas Canvas;
 
         public double OriginScreenPointX
         {
@@ -57,7 +54,20 @@ namespace ConeMapper
             get { return DataModel?.Align2Yp * Canvas?.ActualHeight ?? double.NaN; }
         }
 
+        Canvas Canvas;
         DataModel DataModel;
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName] String T = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(T));
+        }
+
+        #endregion
 
         public ViewModel()  // for initialize only
         {
@@ -67,6 +77,7 @@ namespace ConeMapper
         {
             DataModel = d;
             Canvas = c;
+            d.RecalcNeeded += RecalcNeeded;            
 
             //
             // todo stub - Populate the view model with some example data.
@@ -87,16 +98,14 @@ namespace ConeMapper
             ImageBrush = new ImageBrush(new BitmapImage(new Uri(d.ImageFileName)));
         }
 
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName] String T = "")
+        private void RecalcNeeded(object sender, EventArgs e)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(T));
+            Trace.WriteLine("ViewModel::RecalcNeeded");
+            //  grid lines
+            // is this the best way?
+            // take original bg image
+            // draw lines on top of it
+            // re-source canvas imageBrush ??
         }
-
-        #endregion
     }
 }

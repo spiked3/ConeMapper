@@ -137,7 +137,14 @@ namespace ConeMapper
 
         private void Cone_Click(object sender, RoutedEventArgs e)
         {
-
+            ConePoint p = new ConePoint
+            {
+                X = lastRightMouseDownAt.X / canvas1.ActualWidth,
+                Y = lastRightMouseDownAt.Y / canvas1.ActualHeight,
+                Sequence = 99
+            };
+            //+ I am here, this aint right
+            ViewModel.Cones.Add(new ConeViewModel(p.X, p.Y, 30, 30,Colors.AliceBlue));
         }
 
         private void Test_Click(object sender, RoutedEventArgs e)
@@ -150,9 +157,11 @@ namespace ConeMapper
            // todo prompt save if changed
         }
 
+        Point lastRightMouseDownAt = new Point(-1, -1), lastLeftMouseDownAt = new Point(-1, -1);
+
         private void canvas1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            lastLeftMouseDownAt = e.GetPosition(canvas1);
         }
 
         private void canvas1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -160,16 +169,13 @@ namespace ConeMapper
 
         }
 
-        Point lastRightMouseDownAt = new Point(-1,-1), lastLeftMouseDownAt = new Point(-1,-1);
-
         private void canvas1_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            lastLeftMouseDownAt = e.GetPosition(canvas1);
+            lastRightMouseDownAt = e.GetPosition(canvas1);
         }
 
         private void canvas1_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            lastRightMouseDownAt = e.GetPosition(canvas1);
         }
 
         private void canvas1_MouseWheel(object sender, MouseWheelEventArgs e)

@@ -33,9 +33,9 @@ namespace ConeMapper
         public double MapHeight { get { return _MapHeight; } set { _MapHeight = value; OnPropertyChanged(); } }
         double _MapHeight = 0;
 
-        public double OriginXp { get { return _OriginXp; } set { _OriginXp = value; OnPropertyChanged(); } }
+        public double OriginXp { get { return _OriginXp; } set { _OriginXp = value; Recalc(); OnPropertyChanged(); } }
         double _OriginXp = 0;
-        public double OriginYp { get { return _OriginYp; } set { _OriginYp = value; OnPropertyChanged(); } }
+        public double OriginYp { get { return _OriginYp; } set { _OriginYp = value; Recalc(); OnPropertyChanged(); } }
         double _OriginYp = 0;
 
         public double Align1Xp { get { return _Align1Xp; } set { _Align1Xp = value; OnPropertyChanged(); } }
@@ -61,24 +61,17 @@ namespace ConeMapper
         public string ImageFileName { get { return _ImageFileName; } set { _ImageFileName = value; OnPropertyChanged(); } }
         string _ImageFileName;
 
+        public event EventHandler RecalcNeeded;
+
         //public Point Pct2Local(Point a)
         //{
         //    return Utm2Local(Pct2Utm(a));
         //}
 
-        void RecalcOrigin()
+        void Recalc()
         {
-            // todo it would also be nice if origin entered via Wgs84 would trigger placement on map, but that would be true for any point
-            //Origin.Utm = new Utm
-            //{
-            //    Easting = UtmLeft + (Origin.Pct.X * UtmWidth),
-            //    Northing = UtmTop + (Origin.Pct.Y * UtmHeight),
-            //    Zone = "10T"
-            //};   // hack hardcoded zone
-
-            //var t = $"Plan::RecalcOrigin = ({Origin.Utm})";
-            //MainWindow.Toast(t);
-            //System.Diagnostics.Trace.WriteLine(t);
+            if (RecalcNeeded != null)
+                RecalcNeeded(this, null);
         }
 
         internal void ResetSequenceNumbers()
@@ -89,47 +82,19 @@ namespace ConeMapper
 
         internal string GetNavCode(float initialHeading)
         {
-            double X = 0, Y = 0;
             StringBuilder b = new StringBuilder();
-
-            //b.AppendLine("Pilot = Pilot.Factory(\"192.168.42.1\");");
-            //b.AppendLine("Pilot.OnPilotReceive += Pilot_OnReceive;");
-            //b.AppendLine("Pilot.Send(new { Cmd = \"CONFIG\", Geom = new float[] { 336.2F, 450F } });");
-            //b.AppendLine($"Pilot.Send(new {{ Cmd = \"RESET\", Hdg = {initialHeading:F1} }});");
-            //b.AppendLine("Pilot.Send(new { Cmd = \"ESC\", Value = 1 });");
-            //foreach (Waypoint w in Waypoints)
-            //{
-            //    Point local = Pct2Local(w.XY);
-
-            //    //b.AppendLine($"//Send(new {{ Cmd = \"GOTO\", X={local.X:F3}, Y={local.Y:F3}, Pwr = 40.0F }});");    // gotoxy version
-
-            //    var _x = local.X - X;
-            //    var _y = local.Y - Y;
-
-            //    var hdgToNxt = (Math.Atan2(_y, _x) * 180.0 / Math.PI) + 90.0;
-            //    var distToNext = Math.Sqrt((_x * _x) + (_y * _y));
-
-            //    b.AppendLine($"Pilot.Send(new {{ Cmd = \"ROT\", Hdg={hdgToNxt:F1}, Pwr = 40.0F }});");    // Turn/Move version
-            //    b.AppendLine("Pilot.waitForEvent();");
-            //    b.AppendLine($"Pilot.Send(new {{ Cmd = \"MOV\", Dist={distToNext:F1}, Pwr = 40.0F }});");
-            //    b.AppendLine("Pilot.waitForEvent();");
-
-            //    X = local.X;
-            //    Y = local.Y;
-            //}
-            //b.AppendLine("Pilot.Send(new { Cmd = \"ESC\", Value = 0 });");
-
+            // todo xml/JSON dump of Cone Positions
             return b.ToString();
         }
 
-        public void Save(MainWindow owner, string fileName)
+        public void Save(MainWindow owner, string fn)
         {
-            if (string.IsNullOrEmpty(fileName))
+            if (string.IsNullOrEmpty(fn))
                 SaveAs(owner);
             else
             {
                 string s = JsonConvert.SerializeObject(this);
-                File.WriteAllText(fileName, s);
+                File.WriteAllText(fn, s);
             }
         }
 
